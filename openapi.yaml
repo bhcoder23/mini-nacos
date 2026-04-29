@@ -1,0 +1,81 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /helloworld/{name}:
+        get:
+            tags:
+                - Greeter
+            description: Sends a greeting
+            operationId: Greeter_SayHello
+            parameters:
+                - name: name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/helloworld.v1.HelloReply'
+    /v1/configs:
+        post:
+            tags:
+                - ConfigCenter
+            operationId: ConfigCenter_PublishConfig
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/configcenter.v1.PublishConfigRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/configcenter.v1.PublishConfigResponse'
+components:
+    schemas:
+        configcenter.v1.PublishConfigRequest:
+            type: object
+            properties:
+                namespace:
+                    type: string
+                group:
+                    type: string
+                dataId:
+                    type: string
+                content:
+                    type: string
+        configcenter.v1.PublishConfigResponse:
+            type: object
+            properties:
+                namespace:
+                    type: string
+                group:
+                    type: string
+                dataId:
+                    type: string
+                content:
+                    type: string
+                md5:
+                    type: string
+        helloworld.v1.HelloReply:
+            type: object
+            properties:
+                message:
+                    type: string
+            description: The response message containing the greetings
+tags:
+    - name: ConfigCenter
+    - name: Greeter
+      description: The greeting service definition.

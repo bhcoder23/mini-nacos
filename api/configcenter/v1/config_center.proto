@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package configcenter.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "mini-nacos/api/configcenter/v1;v1";
+
+service ConfigCenter {
+  rpc PublishConfig (PublishConfigRequest) returns (PublishConfigResponse) {
+    option (google.api.http) = {
+      post: "/v1/configs"
+      body: "*"
+    };
+  }
+}
+
+message PublishConfigRequest {
+  string namespace = 1;
+  string group = 2;
+  string data_id = 3;
+  string content = 4;
+}
+
+message PublishConfigResponse {
+  string namespace = 1;
+  string group = 2;
+  string data_id = 3;
+  string content = 4;
+  string md5 = 5;
+}
