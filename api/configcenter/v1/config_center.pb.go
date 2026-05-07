@@ -22,6 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// publish
 type PublishConfigRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
@@ -166,6 +167,296 @@ func (x *PublishConfigResponse) GetMd5() string {
 	return ""
 }
 
+// config
+type GetConfigRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	DataId        string                 `protobuf:"bytes,3,opt,name=data_id,json=dataId,proto3" json:"data_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetConfigRequest) Reset() {
+	*x = GetConfigRequest{}
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetConfigRequest) ProtoMessage() {}
+
+func (x *GetConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetConfigRequest.ProtoReflect.Descriptor instead.
+func (*GetConfigRequest) Descriptor() ([]byte, []int) {
+	return file_configcenter_v1_config_center_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetConfigRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *GetConfigRequest) GetGroup() string {
+	if x != nil {
+		return x.Group
+	}
+	return ""
+}
+
+func (x *GetConfigRequest) GetDataId() string {
+	if x != nil {
+		return x.DataId
+	}
+	return ""
+}
+
+type GetConfigResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	DataId        string                 `protobuf:"bytes,3,opt,name=data_id,json=dataId,proto3" json:"data_id,omitempty"`
+	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
+	Md5           string                 `protobuf:"bytes,5,opt,name=md5,proto3" json:"md5,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetConfigResponse) Reset() {
+	*x = GetConfigResponse{}
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetConfigResponse) ProtoMessage() {}
+
+func (x *GetConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetConfigResponse.ProtoReflect.Descriptor instead.
+func (*GetConfigResponse) Descriptor() ([]byte, []int) {
+	return file_configcenter_v1_config_center_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetConfigResponse) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *GetConfigResponse) GetGroup() string {
+	if x != nil {
+		return x.Group
+	}
+	return ""
+}
+
+func (x *GetConfigResponse) GetDataId() string {
+	if x != nil {
+		return x.DataId
+	}
+	return ""
+}
+
+func (x *GetConfigResponse) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *GetConfigResponse) GetMd5() string {
+	if x != nil {
+		return x.Md5
+	}
+	return ""
+}
+
+// listen
+type ListenConfigRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	DataId        string                 `protobuf:"bytes,3,opt,name=data_id,json=dataId,proto3" json:"data_id,omitempty"`
+	Md5           string                 `protobuf:"bytes,4,opt,name=md5,proto3" json:"md5,omitempty"`
+	TimeoutMs     int64                  `protobuf:"varint,5,opt,name=timeout_ms,json=timeoutMs,proto3" json:"timeout_ms,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListenConfigRequest) Reset() {
+	*x = ListenConfigRequest{}
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListenConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListenConfigRequest) ProtoMessage() {}
+
+func (x *ListenConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListenConfigRequest.ProtoReflect.Descriptor instead.
+func (*ListenConfigRequest) Descriptor() ([]byte, []int) {
+	return file_configcenter_v1_config_center_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListenConfigRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *ListenConfigRequest) GetGroup() string {
+	if x != nil {
+		return x.Group
+	}
+	return ""
+}
+
+func (x *ListenConfigRequest) GetDataId() string {
+	if x != nil {
+		return x.DataId
+	}
+	return ""
+}
+
+func (x *ListenConfigRequest) GetMd5() string {
+	if x != nil {
+		return x.Md5
+	}
+	return ""
+}
+
+func (x *ListenConfigRequest) GetTimeoutMs() int64 {
+	if x != nil {
+		return x.TimeoutMs
+	}
+	return 0
+}
+
+type ListenConfigResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	DataId        string                 `protobuf:"bytes,3,opt,name=data_id,json=dataId,proto3" json:"data_id,omitempty"`
+	Md5           string                 `protobuf:"bytes,4,opt,name=md5,proto3" json:"md5,omitempty"`
+	Changed       bool                   `protobuf:"varint,5,opt,name=changed,proto3" json:"changed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListenConfigResponse) Reset() {
+	*x = ListenConfigResponse{}
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListenConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListenConfigResponse) ProtoMessage() {}
+
+func (x *ListenConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_configcenter_v1_config_center_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListenConfigResponse.ProtoReflect.Descriptor instead.
+func (*ListenConfigResponse) Descriptor() ([]byte, []int) {
+	return file_configcenter_v1_config_center_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListenConfigResponse) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *ListenConfigResponse) GetGroup() string {
+	if x != nil {
+		return x.Group
+	}
+	return ""
+}
+
+func (x *ListenConfigResponse) GetDataId() string {
+	if x != nil {
+		return x.DataId
+	}
+	return ""
+}
+
+func (x *ListenConfigResponse) GetMd5() string {
+	if x != nil {
+		return x.Md5
+	}
+	return ""
+}
+
+func (x *ListenConfigResponse) GetChanged() bool {
+	if x != nil {
+		return x.Changed
+	}
+	return false
+}
+
 var File_configcenter_v1_config_center_proto protoreflect.FileDescriptor
 
 const file_configcenter_v1_config_center_proto_rawDesc = "" +
@@ -181,9 +472,34 @@ const file_configcenter_v1_config_center_proto_rawDesc = "" +
 	"\x05group\x18\x02 \x01(\tR\x05group\x12\x17\n" +
 	"\adata_id\x18\x03 \x01(\tR\x06dataId\x12\x18\n" +
 	"\acontent\x18\x04 \x01(\tR\acontent\x12\x10\n" +
-	"\x03md5\x18\x05 \x01(\tR\x03md52\x86\x01\n" +
+	"\x03md5\x18\x05 \x01(\tR\x03md5\"_\n" +
+	"\x10GetConfigRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x14\n" +
+	"\x05group\x18\x02 \x01(\tR\x05group\x12\x17\n" +
+	"\adata_id\x18\x03 \x01(\tR\x06dataId\"\x8c\x01\n" +
+	"\x11GetConfigResponse\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x14\n" +
+	"\x05group\x18\x02 \x01(\tR\x05group\x12\x17\n" +
+	"\adata_id\x18\x03 \x01(\tR\x06dataId\x12\x18\n" +
+	"\acontent\x18\x04 \x01(\tR\acontent\x12\x10\n" +
+	"\x03md5\x18\x05 \x01(\tR\x03md5\"\x93\x01\n" +
+	"\x13ListenConfigRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x14\n" +
+	"\x05group\x18\x02 \x01(\tR\x05group\x12\x17\n" +
+	"\adata_id\x18\x03 \x01(\tR\x06dataId\x12\x10\n" +
+	"\x03md5\x18\x04 \x01(\tR\x03md5\x12\x1d\n" +
+	"\n" +
+	"timeout_ms\x18\x05 \x01(\x03R\ttimeoutMs\"\x8f\x01\n" +
+	"\x14ListenConfigResponse\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x14\n" +
+	"\x05group\x18\x02 \x01(\tR\x05group\x12\x17\n" +
+	"\adata_id\x18\x03 \x01(\tR\x06dataId\x12\x10\n" +
+	"\x03md5\x18\x04 \x01(\tR\x03md5\x12\x18\n" +
+	"\achanged\x18\x05 \x01(\bR\achanged2\xeb\x02\n" +
 	"\fConfigCenter\x12v\n" +
-	"\rPublishConfig\x12%.configcenter.v1.PublishConfigRequest\x1a&.configcenter.v1.PublishConfigResponse\"\x16\x82\xd3\xe4\x93\x02\x10:\x01*\"\v/v1/configsB#Z!mini-nacos/api/configcenter/v1;v1b\x06proto3"
+	"\rPublishConfig\x12%.configcenter.v1.PublishConfigRequest\x1a&.configcenter.v1.PublishConfigResponse\"\x16\x82\xd3\xe4\x93\x02\x10:\x01*\"\v/v1/configs\x12g\n" +
+	"\tGetConfig\x12!.configcenter.v1.GetConfigRequest\x1a\".configcenter.v1.GetConfigResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/v1/configs\x12z\n" +
+	"\fListenConfig\x12$.configcenter.v1.ListenConfigRequest\x1a%.configcenter.v1.ListenConfigResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/configs/listenB#Z!mini-nacos/api/configcenter/v1;v1b\x06proto3"
 
 var (
 	file_configcenter_v1_config_center_proto_rawDescOnce sync.Once
@@ -197,16 +513,24 @@ func file_configcenter_v1_config_center_proto_rawDescGZIP() []byte {
 	return file_configcenter_v1_config_center_proto_rawDescData
 }
 
-var file_configcenter_v1_config_center_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_configcenter_v1_config_center_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_configcenter_v1_config_center_proto_goTypes = []any{
 	(*PublishConfigRequest)(nil),  // 0: configcenter.v1.PublishConfigRequest
 	(*PublishConfigResponse)(nil), // 1: configcenter.v1.PublishConfigResponse
+	(*GetConfigRequest)(nil),      // 2: configcenter.v1.GetConfigRequest
+	(*GetConfigResponse)(nil),     // 3: configcenter.v1.GetConfigResponse
+	(*ListenConfigRequest)(nil),   // 4: configcenter.v1.ListenConfigRequest
+	(*ListenConfigResponse)(nil),  // 5: configcenter.v1.ListenConfigResponse
 }
 var file_configcenter_v1_config_center_proto_depIdxs = []int32{
 	0, // 0: configcenter.v1.ConfigCenter.PublishConfig:input_type -> configcenter.v1.PublishConfigRequest
-	1, // 1: configcenter.v1.ConfigCenter.PublishConfig:output_type -> configcenter.v1.PublishConfigResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: configcenter.v1.ConfigCenter.GetConfig:input_type -> configcenter.v1.GetConfigRequest
+	4, // 2: configcenter.v1.ConfigCenter.ListenConfig:input_type -> configcenter.v1.ListenConfigRequest
+	1, // 3: configcenter.v1.ConfigCenter.PublishConfig:output_type -> configcenter.v1.PublishConfigResponse
+	3, // 4: configcenter.v1.ConfigCenter.GetConfig:output_type -> configcenter.v1.GetConfigResponse
+	5, // 5: configcenter.v1.ConfigCenter.ListenConfig:output_type -> configcenter.v1.ListenConfigResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -223,7 +547,7 @@ func file_configcenter_v1_config_center_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_configcenter_v1_config_center_proto_rawDesc), len(file_configcenter_v1_config_center_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

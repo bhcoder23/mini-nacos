@@ -13,8 +13,22 @@ service ConfigCenter {
       body: "*"
     };
   }
+
+  rpc GetConfig (GetConfigRequest) returns (GetConfigResponse) {
+    option (google.api.http) = {
+      get: "/v1/configs"
+    };
+  }
+
+  rpc ListenConfig (ListenConfigRequest) returns (ListenConfigResponse) {
+    option (google.api.http) = {
+      post: "/v1/configs/listen"
+      body: "*"
+    };
+  }
 }
 
+// publish
 message PublishConfigRequest {
   string namespace = 1;
   string group = 2;
@@ -28,4 +42,36 @@ message PublishConfigResponse {
   string data_id = 3;
   string content = 4;
   string md5 = 5;
+}
+
+// config
+message GetConfigRequest {
+  string namespace = 1;
+  string group = 2;
+  string data_id = 3;
+}
+
+message GetConfigResponse {
+  string namespace = 1;
+  string group = 2;
+  string data_id = 3;
+  string content = 4;
+  string md5 = 5;
+}
+
+// listen
+message ListenConfigRequest {
+  string namespace = 1;
+  string group = 2;
+  string data_id = 3;
+  string md5 = 4;
+  int64 timeout_ms = 5;
+}
+
+message ListenConfigResponse {
+  string namespace = 1;
+  string group = 2;
+  string data_id = 3;
+  string md5 = 4;
+  bool changed = 5;
 }

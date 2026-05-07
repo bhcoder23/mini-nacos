@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	ErrConfigNotFound   = errors.NotFound(v1.ErrorReason_CONFIG_NOT_FOUND.String(), "config not found")
+	ErrConfigNotFound    = errors.NotFound(v1.ErrorReason_CONFIG_NOT_FOUND.String(), "config not found")
 	ErrInvalidConfigItem = errors.BadRequest("CONFIG_ITEM_INVALID", "config item is nil")
 )
 
@@ -37,6 +37,12 @@ type ConfigChange struct {
 	ChangedAt time.Time
 }
 
+type ListenResult struct {
+	Key     ConfigKey
+	MD5     string
+	Changed bool
+}
+
 type ConfigRepo interface {
 	Save(context.Context, *ConfigItem) error
 	Get(context.Context, ConfigKey) (ConfigItem, error)
@@ -44,6 +50,7 @@ type ConfigRepo interface {
 
 type ConfigWatchHub interface {
 	Notify(context.Context, *ConfigChange)
+	Wait(context.Context, ConfigKey, time.Duration) (ConfigChange, bool, error)
 }
 
 type ConfigUsecase struct {
@@ -98,7 +105,45 @@ func (uc *ConfigUsecase) Publish(ctx context.Context, key ConfigKey, content str
 }
 
 func (uc *ConfigUsecase) Get(ctx context.Context, key ConfigKey) (ConfigItem, error) {
-	return uc.repo.Get(ctx, key)
+	item, err := uc.repo.Get(ctx, key)
+	if err != nil {
+		return ConfigItem{}, err
+	}
+	return item, nil
+}
+
+func (uc *ConfigUsecase) Listen(ctx context.Context, key ConfigKey, clientMD5 string, timeout time.Duration) (ListenResult, error) {
+	item, err := uc.repo.Get(ctx, key)
+	if err != nil {
+		return ListenResult{}, err
+	}
+
+	if item.MD5 != clientMD5 {
+		return ListenResult{
+			Key:     key,
+			MD5:     item.MD5,
+			Changed: true,
+		}, nil
+	}
+
+	change, ok, err := uc.hub.Wait(ctx, key, timeout)
+	if err != nil {
+		return ListenResult{}, err
+	}
+
+	if !ok {
+		return ListenResult{
+			Key:     key,
+			MD5:     item.MD5,
+			Changed: false,
+		}, nil
+	}
+
+	return ListenResult{
+		Key:     change.Key,
+		MD5:     change.MD5,
+		Changed: true,
+	}, nil
 }
 
 func calcMD5(content string) string {

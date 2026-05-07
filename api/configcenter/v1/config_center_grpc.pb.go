@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ConfigCenter_PublishConfig_FullMethodName = "/configcenter.v1.ConfigCenter/PublishConfig"
+	ConfigCenter_GetConfig_FullMethodName     = "/configcenter.v1.ConfigCenter/GetConfig"
+	ConfigCenter_ListenConfig_FullMethodName  = "/configcenter.v1.ConfigCenter/ListenConfig"
 )
 
 // ConfigCenterClient is the client API for ConfigCenter service.
@@ -27,6 +29,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConfigCenterClient interface {
 	PublishConfig(ctx context.Context, in *PublishConfigRequest, opts ...grpc.CallOption) (*PublishConfigResponse, error)
+	GetConfig(ctx context.Context, in *GetConfigRequest, opts ...grpc.CallOption) (*GetConfigResponse, error)
+	ListenConfig(ctx context.Context, in *ListenConfigRequest, opts ...grpc.CallOption) (*ListenConfigResponse, error)
 }
 
 type configCenterClient struct {
@@ -47,11 +51,33 @@ func (c *configCenterClient) PublishConfig(ctx context.Context, in *PublishConfi
 	return out, nil
 }
 
+func (c *configCenterClient) GetConfig(ctx context.Context, in *GetConfigRequest, opts ...grpc.CallOption) (*GetConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetConfigResponse)
+	err := c.cc.Invoke(ctx, ConfigCenter_GetConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *configCenterClient) ListenConfig(ctx context.Context, in *ListenConfigRequest, opts ...grpc.CallOption) (*ListenConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListenConfigResponse)
+	err := c.cc.Invoke(ctx, ConfigCenter_ListenConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ConfigCenterServer is the server API for ConfigCenter service.
 // All implementations must embed UnimplementedConfigCenterServer
 // for forward compatibility.
 type ConfigCenterServer interface {
 	PublishConfig(context.Context, *PublishConfigRequest) (*PublishConfigResponse, error)
+	GetConfig(context.Context, *GetConfigRequest) (*GetConfigResponse, error)
+	ListenConfig(context.Context, *ListenConfigRequest) (*ListenConfigResponse, error)
 	mustEmbedUnimplementedConfigCenterServer()
 }
 
@@ -64,6 +90,12 @@ type UnimplementedConfigCenterServer struct{}
 
 func (UnimplementedConfigCenterServer) PublishConfig(context.Context, *PublishConfigRequest) (*PublishConfigResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method PublishConfig not implemented")
+}
+func (UnimplementedConfigCenterServer) GetConfig(context.Context, *GetConfigRequest) (*GetConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetConfig not implemented")
+}
+func (UnimplementedConfigCenterServer) ListenConfig(context.Context, *ListenConfigRequest) (*ListenConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListenConfig not implemented")
 }
 func (UnimplementedConfigCenterServer) mustEmbedUnimplementedConfigCenterServer() {}
 func (UnimplementedConfigCenterServer) testEmbeddedByValue()                      {}
@@ -104,6 +136,42 @@ func _ConfigCenter_PublishConfig_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ConfigCenter_GetConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConfigCenterServer).GetConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ConfigCenter_GetConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConfigCenterServer).GetConfig(ctx, req.(*GetConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConfigCenter_ListenConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListenConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConfigCenterServer).ListenConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ConfigCenter_ListenConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConfigCenterServer).ListenConfig(ctx, req.(*ListenConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ConfigCenter_ServiceDesc is the grpc.ServiceDesc for ConfigCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +182,14 @@ var ConfigCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PublishConfig",
 			Handler:    _ConfigCenter_PublishConfig_Handler,
+		},
+		{
+			MethodName: "GetConfig",
+			Handler:    _ConfigCenter_GetConfig_Handler,
+		},
+		{
+			MethodName: "ListenConfig",
+			Handler:    _ConfigCenter_ListenConfig_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,15 +19,21 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationConfigCenterGetConfig = "/configcenter.v1.ConfigCenter/GetConfig"
+const OperationConfigCenterListenConfig = "/configcenter.v1.ConfigCenter/ListenConfig"
 const OperationConfigCenterPublishConfig = "/configcenter.v1.ConfigCenter/PublishConfig"
 
 type ConfigCenterHTTPServer interface {
+	GetConfig(context.Context, *GetConfigRequest) (*GetConfigResponse, error)
+	ListenConfig(context.Context, *ListenConfigRequest) (*ListenConfigResponse, error)
 	PublishConfig(context.Context, *PublishConfigRequest) (*PublishConfigResponse, error)
 }
 
 func RegisterConfigCenterHTTPServer(s *http.Server, srv ConfigCenterHTTPServer) {
 	r := s.Route("/")
 	r.POST("/v1/configs", _ConfigCenter_PublishConfig0_HTTP_Handler(srv))
+	r.GET("/v1/configs", _ConfigCenter_GetConfig0_HTTP_Handler(srv))
+	r.POST("/v1/configs/listen", _ConfigCenter_ListenConfig0_HTTP_Handler(srv))
 }
 
 func _ConfigCenter_PublishConfig0_HTTP_Handler(srv ConfigCenterHTTPServer) func(ctx http.Context) error {
@@ -52,7 +58,50 @@ func _ConfigCenter_PublishConfig0_HTTP_Handler(srv ConfigCenterHTTPServer) func(
 	}
 }
 
+func _ConfigCenter_GetConfig0_HTTP_Handler(srv ConfigCenterHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GetConfigRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationConfigCenterGetConfig)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetConfig(ctx, req.(*GetConfigRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*GetConfigResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _ConfigCenter_ListenConfig0_HTTP_Handler(srv ConfigCenterHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in ListenConfigRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationConfigCenterListenConfig)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ListenConfig(ctx, req.(*ListenConfigRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*ListenConfigResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
 type ConfigCenterHTTPClient interface {
+	GetConfig(ctx context.Context, req *GetConfigRequest, opts ...http.CallOption) (rsp *GetConfigResponse, err error)
+	ListenConfig(ctx context.Context, req *ListenConfigRequest, opts ...http.CallOption) (rsp *ListenConfigResponse, err error)
 	PublishConfig(ctx context.Context, req *PublishConfigRequest, opts ...http.CallOption) (rsp *PublishConfigResponse, err error)
 }
 
@@ -62,6 +111,32 @@ type ConfigCenterHTTPClientImpl struct {
 
 func NewConfigCenterHTTPClient(client *http.Client) ConfigCenterHTTPClient {
 	return &ConfigCenterHTTPClientImpl{client}
+}
+
+func (c *ConfigCenterHTTPClientImpl) GetConfig(ctx context.Context, in *GetConfigRequest, opts ...http.CallOption) (*GetConfigResponse, error) {
+	var out GetConfigResponse
+	pattern := "/v1/configs"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationConfigCenterGetConfig))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *ConfigCenterHTTPClientImpl) ListenConfig(ctx context.Context, in *ListenConfigRequest, opts ...http.CallOption) (*ListenConfigResponse, error) {
+	var out ListenConfigResponse
+	pattern := "/v1/configs/listen"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationConfigCenterListenConfig))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
 
 func (c *ConfigCenterHTTPClientImpl) PublishConfig(ctx context.Context, in *PublishConfigRequest, opts ...http.CallOption) (*PublishConfigResponse, error) {
