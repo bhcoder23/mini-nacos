@@ -14,6 +14,8 @@
   - `publish` 主链精读与 Kratos 映射
 - `docs/study/01-config-get-listen.md`
   - `get / listen` 主链精读、长轮询语义、当前映射
+- `docs/reviews/01-config-get-review.md`
+  - `get` 学习过程答题与点评记录
 - `docs/design/01-config-round-1.md`
   - Kratos 版 `Config` round-1 设计
 - `docs/design/01-config-round-2.md`
@@ -26,6 +28,7 @@
 ## 当前原则
 
 - `study` 负责讲清源码链路和设计动机
+- `reviews` 负责保留学习过程，不把长问答直接堆进 `study`
 - `design` 负责把上游语义映射成当前仓库结构
 - `homework` 负责把设计拆成可执行任务
 - 三类文档不要重复抄同一段长解释

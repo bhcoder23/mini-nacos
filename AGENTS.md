@@ -52,6 +52,7 @@ This file applies to the entire repository.
 
 - Keep `docs/study`, `docs/design`, and `docs/homework` distinct:
   - `study`: source-chain notes, diagrams, conclusions, review questions
+  - `reviews`: learning answers, mentor feedback, pass/fail checkpoints
   - `design`: Kratos-layer mapping, models, boundaries, preserved semantics
   - `homework`: executable tasks and CR checkpoints
 - Prefer diagrams embedded in Markdown (`mermaid` / ASCII).
@@ -62,6 +63,12 @@ This file applies to the entire repository.
   - lightweight change notification
   - separation of query and listen
 - Avoid copying the same long explanation across all three doc types.
+- Preferred learning flow:
+  - `study` gives the source-reading target
+  - `reviews` records the learner's answers and mentor feedback
+  - `design` is written after the source logic is understood
+  - `homework` starts after design is stable
+- Keep `study` as the cleaned-up final note; do not dump long raw Q&A into `study`.
 
 ## Naming Guidance
 
