@@ -24,4 +24,5 @@
 
 ## 当前状态
 
-- 当前设计文档：`docs/design/01-config-round-1.md`
+- 已有设计文档：`docs/design/01-config-round-1.md`
+- 已有设计文档：`docs/design/01-config-round-2.md`

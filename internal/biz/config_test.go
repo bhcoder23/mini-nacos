@@ -3,6 +3,7 @@ package biz
 import (
 	"context"
 	"testing"
+	"time"
 )
 
 type fakeConfigRepo struct {
@@ -37,6 +38,10 @@ func (h *fakeConfigWatchHub) Notify(_ context.Context, change *ConfigChange) {
 	if change != nil {
 		h.notified = append(h.notified, *change)
 	}
+}
+
+func (h *fakeConfigWatchHub) Wait(context.Context, ConfigKey, time.Duration) (ConfigChange, bool, error) {
+	return ConfigChange{}, false, nil
 }
 
 func TestConfigUsecasePublishFirstPublish(t *testing.T) {

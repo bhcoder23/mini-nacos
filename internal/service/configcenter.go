@@ -3,6 +3,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	pb "mini-nacos/api/configcenter/v1"
 	"mini-nacos/internal/biz"
@@ -34,5 +35,45 @@ func (s *ConfigCenterService) PublishConfig(ctx context.Context, req *pb.Publish
 		DataId:    item.Key.DataID,
 		Content:   item.Content,
 		Md5:       item.MD5,
+	}, nil
+}
+
+func (s *ConfigCenterService) GetConfig(ctx context.Context, req *pb.GetConfigRequest) (*pb.GetConfigResponse, error) {
+	item, err := s.uc.Get(ctx, biz.ConfigKey{
+		Namespace: req.Namespace,
+		Group:     req.Group,
+		DataID:    req.DataId,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.GetConfigResponse{
+		Namespace: item.Key.Namespace,
+		Group:     item.Key.Group,
+		DataId:    item.Key.DataID,
+		Content:   item.Content,
+		Md5:       item.MD5,
+	}, nil
+}
+
+func (s *ConfigCenterService) ListenConfig(ctx context.Context, req *pb.ListenConfigRequest) (*pb.ListenConfigResponse, error) {
+	result, err := s.uc.Listen(ctx, biz.ConfigKey{
+		Namespace: req.Namespace,
+		Group:     req.Group,
+		DataID:    req.DataId,
+	}, req.Md5, time.Duration(req.TimeoutMs)*time.Millisecond)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.ListenConfigResponse{
+		Namespace: result.Key.Namespace,
+		Group:     result.Key.Group,
+		DataId:    result.Key.DataID,
+		Md5:       result.MD5,
+		Changed:   result.Changed,
 	}, nil
 }

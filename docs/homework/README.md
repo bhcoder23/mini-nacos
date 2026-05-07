@@ -15,5 +15,6 @@
 
 ## 当前状态
 
-- 当前作业：`docs/homework/01-config-round-1.md`
-- 当前主题：`Config publish-first`
+- 已有作业：`docs/homework/01-config-round-1.md`
+- 已有作业：`docs/homework/01-config-round-2.md`
+- 当前主题：`Config get / listen`

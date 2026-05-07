@@ -26,6 +26,30 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/helloworld.v1.HelloReply'
     /v1/configs:
+        get:
+            tags:
+                - ConfigCenter
+            operationId: ConfigCenter_GetConfig
+            parameters:
+                - name: namespace
+                  in: query
+                  schema:
+                    type: string
+                - name: group
+                  in: query
+                  schema:
+                    type: string
+                - name: dataId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/configcenter.v1.GetConfigResponse'
         post:
             tags:
                 - ConfigCenter
@@ -43,8 +67,66 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/configcenter.v1.PublishConfigResponse'
+    /v1/configs/listen:
+        post:
+            tags:
+                - ConfigCenter
+            operationId: ConfigCenter_ListenConfig
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/configcenter.v1.ListenConfigRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/configcenter.v1.ListenConfigResponse'
 components:
     schemas:
+        configcenter.v1.GetConfigResponse:
+            type: object
+            properties:
+                namespace:
+                    type: string
+                group:
+                    type: string
+                dataId:
+                    type: string
+                content:
+                    type: string
+                md5:
+                    type: string
+        configcenter.v1.ListenConfigRequest:
+            type: object
+            properties:
+                namespace:
+                    type: string
+                group:
+                    type: string
+                dataId:
+                    type: string
+                md5:
+                    type: string
+                timeoutMs:
+                    type: string
+            description: listen
+        configcenter.v1.ListenConfigResponse:
+            type: object
+            properties:
+                namespace:
+                    type: string
+                group:
+                    type: string
+                dataId:
+                    type: string
+                md5:
+                    type: string
+                changed:
+                    type: boolean
         configcenter.v1.PublishConfigRequest:
             type: object
             properties:
@@ -56,6 +138,7 @@ components:
                     type: string
                 content:
                     type: string
+            description: publish
         configcenter.v1.PublishConfigResponse:
             type: object
             properties:
